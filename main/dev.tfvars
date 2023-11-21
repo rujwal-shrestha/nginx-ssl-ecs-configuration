@@ -4,6 +4,6 @@
 
 environment = "dev"
 application = "nginx-ssl-ecs"
-owner       = "adex"
+owner       = ""
 
 enable_deletion_protection = false

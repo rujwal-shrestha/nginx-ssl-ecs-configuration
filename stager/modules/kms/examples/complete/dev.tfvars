@@ -3,7 +3,7 @@
 ################################################################################
 
 region     = "us-east-1"
-namespace  = "Adex"
+namespace  = ""
 stage      = "dev"
 attributes = []
-owner      = "adex"
+owner      = ""

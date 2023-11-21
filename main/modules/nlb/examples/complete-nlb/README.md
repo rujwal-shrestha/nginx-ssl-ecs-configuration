@@ -20,7 +20,7 @@
 | <a name="module_acm"></a> [acm](#module\_acm) | github.com/terraform-aws-modules/terraform-aws-acm | 27e32f5 |
 | <a name="module_nlb"></a> [nlb](#module\_nlb) | ../../ | n/a |
 | <a name="module_s3_bucket_for_logs"></a> [s3\_bucket\_for\_logs](#module\_s3\_bucket\_for\_logs) | github.com/terraform-aws-modules/terraform-aws-s3-bucket | d371175 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/adexltd/terraform-aws-vpc-module.git | b7c3a76 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/ltd/terraform-aws-vpc-module.git | b7c3a76 |
 
 ## Resources
 

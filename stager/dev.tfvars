@@ -4,7 +4,7 @@
 
 environment = "dev"
 application = "nginx-ssl-ecs"
-owner       = "adex"
+owner       = ""
 
 # Enable if you want to use custom VPC
 # use_custom_vpc      = true

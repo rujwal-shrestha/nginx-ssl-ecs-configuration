@@ -1,0 +1,106 @@
+name: STORE SSL CERTIFICATE and CONFIGS TO S3
+
+on: [workflow_dispatch] # Allows you to run this workflow manually from the Actions tab
+  # push:
+  #   branches:
+  #     - stage
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+env:
+  AWS_REGION: us-east-1
+  ENDPOINT_TYPE_USED: false
+  SERVER_CERT_PATH_FOR_S3: dev-ssl-server-certificate
+  ROOT_CA_CERT_PATH_FOR_S3: dev-ssl-root-ca-certificate
+  TERRAFORM_CERTIFICAE_STORAGE_BUCKET: dev-nginx-ssl-ecs-certificates-configs
+  SERVER_PARAMETER_PATH: /ssl/server_data
+  ROOT_CA_PARAMETER_PATH: /ssl/ca_data
+  NGINX_CONFIGURATION_PATH_FOR_S3: nginx
+  PATH_FOR_BASH_SCRIPT: scripts
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v3
+      id: creds
+      with:
+        role-to-assume: arn:aws:iam::${{ secrets.POC_ACC }}:role/github_oidc
+        role-session-name: OIDCSession
+        aws-region: ${{ env.AWS_REGION }}
+        output-credentials: true
+
+    - name: Fetch the server data from secrets
+      run: |
+        cat <<EOF > scripts/server_data.txt
+        ${{ secrets.SERVER_PARAMETER_VALUE }}
+        EOF
+
+    - name: Fetch the root_ca data from secrets
+      run: |
+        cat <<EOF > scripts/ca_data.txt
+        ${{ secrets.ROOT_CA_PARAMETER_VALUE }}
+        EOF
+
+
+    - name: Create server certificate
+      run: |
+        cd ${{ env.PATH_FOR_BASH_SCRIPT }}
+        sudo chmod +x server-certificate-generation.sh
+        /bin/bash server-certificate-generation.sh
+
+    - name: Create root_ca certificate
+      run: |
+        cd ${{ env.PATH_FOR_BASH_SCRIPT }}
+        sudo chmod +x root-ca-certificate-generation.sh
+        /bin/bash root-ca-certificate-generation.sh
+
+    - name: Copy server certificate to S3
+      run: aws s3 cp scripts/server_certificate s3://${{ env.TERRAFORM_CERTIFICAE_STORAGE_BUCKET }}/${{env.SERVER_CERT_PATH_FOR_S3}} --recursive
+
+    - name: Copy root_ca certificate to S3
+      run: aws s3 cp scripts/root_ca_certificate s3://${{ env.TERRAFORM_CERTIFICAE_STORAGE_BUCKET }}/${{env.ROOT_CA_CERT_PATH_FOR_S3}} --recursive
+
+    - name: Create  file
+      run: |
+        mkdir configuration
+        cd configuration
+        cat <<EOF > default.conf
+        server {
+            listen 443 ssl;
+            listen  [::]:443;
+            server_name _;
+
+            ssl_certificate ${{ secrets.SERVER_SUPPLIED_CRT_FILE }};
+            ssl_certificate_key  ${{ secrets.SERVER_SUPPLIED_PRIVATE_KEY }};
+
+            ssl_client_certificate ${{ secrets.PATH_OF_EFS_FOR_CLIENT_CERTIFICATE_CA }};
+            ssl_verify_client on;
+            ssl_verify_depth 2;
+
+            location / {
+                    proxy_pass http://${{ secrets.IP_OR_DNS_FOR_BACKEND1 }};
+                }
+            }
+        }
+        server {
+            listen 80;
+            server_name _;
+
+            location / {
+                return 200 "OK";
+            }
+        }
+        EOF
+
+    - name: Copy the conf file to s3 bucket
+      run: |
+        aws s3 cp configuration  s3://${{ env.TERRAFORM_CERTIFICAE_STORAGE_BUCKET }}/${{env.NGINX_CONFIGURATION_PATH_FOR_S3}} --recursive

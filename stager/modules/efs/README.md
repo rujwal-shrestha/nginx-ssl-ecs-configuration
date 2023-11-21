@@ -98,7 +98,7 @@ module "efs" {
   }
 
   tags = {
-    Owner = "adex"
+    Owner = ""
     Terraform   = "true"
     Environment = "dev"
   }

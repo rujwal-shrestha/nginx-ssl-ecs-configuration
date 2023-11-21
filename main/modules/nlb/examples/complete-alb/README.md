@@ -24,7 +24,7 @@
 | <a name="module_lambda_without_allowed_triggers"></a> [lambda\_without\_allowed\_triggers](#module\_lambda\_without\_allowed\_triggers) | github.com/terraform-aws-modules/terraform-aws-lambda | 9acd322 |
 | <a name="module_lb_disabled"></a> [lb\_disabled](#module\_lb\_disabled) | ../../ | n/a |
 | <a name="module_s3_bucket_for_logs"></a> [s3\_bucket\_for\_logs](#module\_s3\_bucket\_for\_logs) | github.com/terraform-aws-modules/terraform-aws-s3-bucket | d371175 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/adexltd/terraform-aws-vpc-module.git | b7c3a76 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/ltd/terraform-aws-vpc-module.git | b7c3a76 |
 | <a name="module_wildcard_cert"></a> [wildcard\_cert](#module\_wildcard\_cert) | github.com/terraform-aws-modules/terraform-aws-acm | 27e32f5 |
 
 ## Resources

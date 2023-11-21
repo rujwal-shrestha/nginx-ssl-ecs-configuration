@@ -25,7 +25,7 @@ variable "region" {
 }
 variable "namespace" {
   type    = string
-  default = "Adex"
+  default = ""
 }
 
 variable "stage" {

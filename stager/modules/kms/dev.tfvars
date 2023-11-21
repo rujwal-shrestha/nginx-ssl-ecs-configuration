@@ -3,5 +3,5 @@
 ################################################################################
 
 environment = "dev"
-application = "adex-devops-competency"
-owner       = "adex"
+application = "-devops-competency"
+owner       = ""

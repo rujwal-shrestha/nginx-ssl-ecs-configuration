@@ -17,8 +17,8 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_efs"></a> [efs](#module\_efs) | ../.. | n/a |
-| <a name="module_kms"></a> [kms](#module\_kms) | github.com/adexltd/terraform-aws-kms-module.git | 7577f08 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/adexltd/terraform-aws-vpc-module.git | f15cfc1 |
+| <a name="module_kms"></a> [kms](#module\_kms) | github.com/ltd/terraform-aws-kms-module.git | 7577f08 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | github.com/ltd/terraform-aws-vpc-module.git | f15cfc1 |
 
 ## Resources
 
@@ -34,7 +34,7 @@
 | <a name="input_application"></a> [application](#input\_application) | Name of the application | `string` | `""` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | n/a | `list(string)` | `[]` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Working application environment eg: dev, stg, prd | `string` | `""` | no |
-| <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `string` | `"Adex"` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | n/a | `string` | `""` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | Name to be used on all the resources as identifier | `string` | `""` | no |
 | <a name="input_region"></a> [region](#input\_region) | n/a | `string` | `"us-east-1"` | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | n/a | `string` | `"dev"` | no |

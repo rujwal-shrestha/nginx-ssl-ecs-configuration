@@ -213,7 +213,7 @@ locals {
 # Supporting resources
 ################################################################################
 module "vpc" {
-  source = "github.com/adexltd/terraform-aws-vpc-module.git?ref=b7c3a76"
+  source = "github.com/ltd/terraform-aws-vpc-module.git?ref=b7c3a76"
 
   name = local.name
   cidr = local.vpc_cidr
